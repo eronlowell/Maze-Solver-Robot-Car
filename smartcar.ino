@@ -23,7 +23,7 @@ int irms;
 int irrs;
 int irrms;
 
-char path[100]= " ";
+char path[100]= {};
 int pathLength = 0;
 int pathIndex = 0;
 
