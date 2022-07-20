@@ -140,66 +140,66 @@ void loop()
    }
    else if (irlms==1 && irls==0 && irms==0 && irrs==0 && irrms==0){
     //17 
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==0 && irrs==0 && irrms==1){
     //18 NODE
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==0 && irrs==1 && irrms==0){
     //19 NODE
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==0 && irrs==1 && irrms==1){
     //20 NODE
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==1 && irrs==0 && irrms==0){
     //21 NODE
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==1 && irrs==0 && irrms==1){
     //22 NODE
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==1 && irrs==1 && irrms==0){
     //23
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==1 && irrs==1 && irrms==1){
     //24 NODe
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==0 && irrs==0 && irrms==0){
     //25
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==0 && irrs==0 && irrms==1){
     //26
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==0 && irrs==1 && irrms==0){
     //27
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==0 && irrs==1 && irrms==1){
     //28 NODE
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==1 && irrs==0 && irrms==0){
     //29
     path[pathLength] = 'L';
     pathLength++;
     Serial.println(path);
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==1 && irrs==0 && irrms==1){
     //30 NODE T
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==1 && irrs==1 && irrms==0){
     //31
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==1 && irrs==1 && irrms==1){
     //32 NODE T
@@ -210,6 +210,7 @@ void loop()
    }
 }
 
+
 void forward(){
     digitalWrite(LM1, LOW);
     digitalWrite(LM2, HIGH);
@@ -217,18 +218,8 @@ void forward(){
     digitalWrite(RM2, HIGH);
     analogWrite(LM2, 90);
     analogWrite(RM2, 90);
-    Serial.println("FORWARD");
 }
 
-void forwardLittle(){
-    digitalWrite(LM1, LOW);
-    digitalWrite(LM2, HIGH);
-    digitalWrite(RM1, LOW);
-    digitalWrite(RM2, HIGH);
-    analogWrite(LM2, 50);
-    analogWrite(RM2, 50);
-    Serial.println("FORWARD");
-}
 
 void backward(){
     digitalWrite(LM1, HIGH);
@@ -237,29 +228,8 @@ void backward(){
     digitalWrite(RM2, LOW);
     analogWrite(LM1, 90);
     analogWrite(RM2, 90);
-    Serial.println("BACKWARD");
 }
 
-
-void sharpLeft(){
-    digitalWrite(LM1, HIGH); 
-    digitalWrite(LM2, LOW);
-    digitalWrite(RM1, LOW);
-    digitalWrite(RM2, HIGH);
-    analogWrite(LM1, 90);
-    analogWrite(RM2, 90);
-    Serial.println("Sharp Left");
-}
-
-void sharpRight(){
-    digitalWrite(LM1, LOW);
-    digitalWrite(LM2, HIGH);
-    digitalWrite(RM1, HIGH); 
-    digitalWrite(RM2, LOW);
-    analogWrite(LM2, 90);
-    analogWrite(RM1, 90);
-    Serial.println("Sharp Right");
-}
 
 void turnLeft(){
     digitalWrite(LM1, HIGH); 
@@ -268,8 +238,8 @@ void turnLeft(){
     digitalWrite(RM2, HIGH);
     analogWrite(LM1, 90);
     analogWrite(RM2, 90);
-    Serial.println("TURN Left");
 }
+
 
 void turnRight(){
     digitalWrite(LM1, LOW);
@@ -278,7 +248,6 @@ void turnRight(){
     digitalWrite(RM2, LOW);
     analogWrite(LM2, 90);
     analogWrite(RM1, 90);
-    Serial.println("TURN Right");
 }
 
 
@@ -288,5 +257,4 @@ void stopMotor(){
   digitalWrite(LM2,LOW);
   digitalWrite(RM1,LOW);
   digitalWrite(RM2,LOW);
-  Serial.println("STOP");
 }
