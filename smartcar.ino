@@ -66,7 +66,10 @@ void loop()
    irrms = digitalRead(RMS);
 
    if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==0){
-    //01
+    //01-UTurn
+    path[pathLength] = 'B';
+    pathLength++;
+    Serial.println(path);
     turnRight();
    }
    else if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==1){
