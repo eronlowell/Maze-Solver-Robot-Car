@@ -29,7 +29,7 @@ int readLength = 0;
 
 int replaystage;
 
-int red = 0;
+int red;
 
 void setup()
 {
