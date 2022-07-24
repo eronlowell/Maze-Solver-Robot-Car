@@ -197,18 +197,7 @@ void loop()
      }
      else if (irlms==1 && irls==1 && irms==0 && irrs==0 && irrms==0){
       //25
-      if (path[pathLength-1] != 'L'){
-        path[pathLength]= 'L';
-        pathLength++;
-        Serial.println(path);
-        turnLeft();
-        if (path[pathLength-2] == 'B'){
-          shortPath();
-        }
-       }
-       else{
-        turnLeft();
-       }
+      turnLeft();
      }
      else if (irlms==1 && irls==1 && irms==0 && irrs==0 && irrms==1){
       //26
@@ -224,7 +213,18 @@ void loop()
      }
      else if (irlms==1 && irls==1 && irms==1 && irrs==0 && irrms==0){
       //29
+        if (path[pathLength-1] != 'L'){
+        path[pathLength]= 'L';
+        pathLength++;
+        Serial.println(path);
         turnLeft();
+        if (path[pathLength-2] == 'B'){
+          shortPath();
+        }
+       }
+       else{
+        turnLeft();
+       }
      }
      else if (irlms==1 && irls==1 && irms==1 && irrs==0 && irrms==1){
       //30 NODE T
@@ -236,7 +236,18 @@ void loop()
      }
      else if (irlms==1 && irls==1 && irms==1 && irrs==1 && irrms==1){
       //32 NODE T
+        if (path[pathLength-1] != 'L'){
+        path[pathLength]= 'L';
+        pathLength++;
+        Serial.println(path);
         turnLeft();
+        if (path[pathLength-2] == 'B'){
+          shortPath();
+        }
+       }
+       else{
+        turnLeft();
+       }
      }
    }
    else{
