@@ -25,14 +25,11 @@ int irrms;
 
 char path[100]= {};
 int pathLength = 0;
-int pathIndex = 0;
+int readLength = 0;
 
-
+int replaystage;
 
 int red = 0;
-int blue = 0;
-String color;
-
 
 void setup()
 {
@@ -60,17 +57,12 @@ void setup()
 
 void loop()
 {
-  irlms = digitalRead(LMS);
-  irls = digitalRead(LS);
-  irms = digitalRead(MS);
-  irrs = digitalRead(RS);
-  irrms = digitalRead(RMS);
-
+  readSensors();
 //ColorSensor
   digitalWrite(S2,LOW);
   digitalWrite(S3,LOW); 
   red = pulseIn(sensorOut, LOW);
-   if (red != 45){
+   if (red <= 41 || red >= 70){
 
      if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==0){
       //01-UTurn
@@ -94,7 +86,7 @@ void loop()
      }
      else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==1){
       //04
-      if (path[pathLength-1] != 'R'){
+      if (path[pathLength-1] != 'R' || path[pathLength-1] != 'B'){
         path[pathLength]= 'R';
         pathLength++;
         Serial.println(path);
@@ -255,6 +247,13 @@ void loop()
    }
 }
 
+void readSensors(){
+  irlms = digitalRead(LMS);
+  irls = digitalRead(LS);
+  irms = digitalRead(MS);
+  irrs = digitalRead(RS);
+  irrms = digitalRead(RMS);
+}
 
 void forward(){
     digitalWrite(LM1, LOW);
@@ -303,9 +302,11 @@ void stopMotor(){
   digitalWrite(RM1,LOW);
   digitalWrite(RM2,LOW);
 
+  replaystage=1;
   path[pathLength]='D';
   pathLength++;
-  delay(1500);
+  delay(5000);
+  replay();
 }
 
 void shortPath(){
@@ -350,4 +351,41 @@ void shortPath(){
   path[pathLength+1]='D';
   path[pathLength+2]='D';
   pathLength++;
+}
+
+void replay(){
+   readSensors();
+  if(irlms == 0 && irrms == 0 && irrs == 0 && irls == 0){
+    forward();
+  }
+  else{
+    if(path[readLength]=='D')
+    {
+    forward();
+    delay(100);
+    digitalWrite(LM1, LOW);
+    digitalWrite(LM2, LOW);
+    digitalWrite(RM1, LOW);
+    digitalWrite(RM2, LOW);
+      endMotion();
+    }
+    if(path[readLength]=='R')
+    {
+    turnRight();
+    }
+    if(path[readLength]=='L'){
+    turnLeft();
+    }
+    if(path[readLength]=='S'){
+    forward();
+    }
+    readLength++;
+  }
+  replay();
+}
+
+void endMotion()
+
+{
+  endMotion();
 }
