@@ -358,6 +358,18 @@ void replay(){
   if(irlms == 0 && irrms == 0 && irrs == 0 && irls == 0){
     forward();
   }
+  else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==0){
+    turnRight();
+  }
+  else if (irlms==0 && irls==0 && irms==1 && irrs==1 && irrms==0){
+    turnRight();
+  }
+  else if (irlms==0 && irls==1 && irms==0 && irrs==0 && irrms==0){
+    turnLeft();
+  }
+  else if (irlms==0 && irls==1 && irms==1 && irrs==0 && irrms==0){
+    turnLeft();
+  }
   else{
     if(path[readLength]=='D')
     {
@@ -371,10 +383,14 @@ void replay(){
     }
     if(path[readLength]=='R')
     {
-    turnRight();
+      while (irlms == 0 && irrms == 0 &&irms==1 && irrs == 0 && irls == 0) {
+        turnRight();
+      }
     }
     if(path[readLength]=='L'){
-    turnLeft();
+      while (irlms == 0 && irrms == 0 &&irms==1 && irrs == 0 && irls == 0){
+        turnLeft();
+      }
     }
     if(path[readLength]=='S'){
     forward();
