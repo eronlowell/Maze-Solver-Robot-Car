@@ -383,12 +383,12 @@ void replay(){
     }
     if(path[readLength]=='R')
     {
-      while (irlms == 0 && irrms == 0 &&irms==1 && irrs == 0 && irls == 0) {
+      while (irlms != 0 && irrms != 0 && irms != 1 && irrs != 0 && irls != 0) {
         turnRight();
       }
     }
     if(path[readLength]=='L'){
-      while (irlms == 0 && irrms == 0 &&irms==1 && irrs == 0 && irls == 0){
+      while (irlms != 0 && irrms != 0 && irms != 1 && irrs != 0 && irls != 0){
         turnLeft();
       }
     }
