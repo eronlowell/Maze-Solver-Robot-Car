@@ -149,7 +149,7 @@ void loop()
      }
      else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==0){
       //15
-      turnLeft();
+      forward();
      }
      else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==1){
       //16
@@ -369,6 +369,9 @@ void replay(){
   }
   else if (irlms==0 && irls==1 && irms==1 && irrs==0 && irrms==0){
     turnLeft();
+  }
+  else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==0){
+    forward();
   }
   else{
     if(path[readLength]=='D')
