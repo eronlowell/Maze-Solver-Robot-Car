@@ -355,7 +355,7 @@ void shortPath(){
 
 void replay(){
    readSensors();
-  if(irlms == 0 && irrms == 0 && irrs == 0 && irls == 0){
+  if(irlms == 0 && irrms == 0 && irms==1 && irrs == 0 && irls == 0){
     forward();
   }
   else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==0){
