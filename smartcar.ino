@@ -21,7 +21,7 @@ int irrms;
 int irrmms;
 int irlmms;
 
-char path[100]= {};
+char path[1000]= {};
 int pathLength = 0;
 int readLength = 0;
 
@@ -61,6 +61,9 @@ void loop()
         pathLength++;
         Serial.println(path);
         turnRight();
+        if (path[pathLength-2] == 'S'){
+          shortPath();
+        }
        }
        else{
         turnRight();
@@ -341,6 +344,12 @@ void shortPath(){
   if(path[pathLength-3]=='L' && path[pathLength-1]=='S' && shortDone==0){
     pathLength-=3;
     path[pathLength]='R';
+    shortDone=1;
+  }
+
+  if(path[pathLength-3]=='B' && path[pathLength-1]=='B' && shortDone==0){
+    pathLength-=3;
+    path[pathLength]='S';
     shortDone=1;
   }
 
