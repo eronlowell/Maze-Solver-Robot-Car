@@ -1,9 +1,9 @@
 //defining motors and sensors
-#define LMS 11   // Leftmost sensor
-#define LS 10   // Left sensor
-#define MS 12   // Middle sensor
-#define RS 13 // Right sensor
-#define RMS 9 // Rightmost sensor
+#define LMS 12   // Leftmost sensor
+#define LS 11   // Left sensor
+#define MS 10   // Middle sensor
+#define RS 9 // Right sensor
+#define RMS 8 // Rightmost sensor
 
 
 #define LM1 2   // left motor
@@ -11,11 +11,7 @@
 #define RM1 4   // right motor
 #define RM2 5   
 
-#define S0 A0   // Color Sensor
-#define S1 A1   
-#define S2 A2   
-#define S3 A3   
-#define sensorOut 8
+
 
 int irlms;
 int irls;
@@ -28,16 +24,14 @@ int pathLength = 0;
 int pathIndex = 0;
 
 
-int red = 0;
-int blue = 0;
-String color;
-
 
 void setup()
 {
   pinMode(LS, INPUT);
   pinMode(RS, INPUT);
   pinMode(MS, INPUT);
+  pinMode(LMS, INPUT);
+  pinMode(RMS, INPUT);
 
 
   pinMode(LM1, OUTPUT);
@@ -45,14 +39,7 @@ void setup()
   pinMode(RM1, OUTPUT);
   pinMode(RM2, OUTPUT);
 
-  pinMode(S0, OUTPUT);  
-  pinMode(S1, OUTPUT);  
-  pinMode(S2, OUTPUT);  
-  pinMode(S3, OUTPUT); 
-  pinMode(sensorOut, INPUT);
-
-  digitalWrite(S0, HIGH);  
-  digitalWrite(S1, LOW); 
+  
 
   Serial.begin(9600);
 }
@@ -131,63 +118,63 @@ void loop()
    }
    else if (irlms==1 && irls==0 && irms==0 && irrs==0 && irrms==0){
     //17 
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==0 && irrs==0 && irrms==1){
     //18 NODE
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==0 && irrs==1 && irrms==0){
     //19 NODE
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==0 && irrs==1 && irrms==1){
     //20 NODE
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==1 && irrs==0 && irrms==0){
     //21 NODE
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==1 && irrs==0 && irrms==1){
     //22 NODE
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==1 && irrs==1 && irrms==0){
     //23
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==0 && irms==1 && irrs==1 && irrms==1){
     //24 NODe
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==0 && irrs==0 && irrms==0){
     //25
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==0 && irrs==0 && irrms==1){
     //26
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==0 && irrs==1 && irrms==0){
     //27
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==0 && irrs==1 && irrms==1){
     //28 NODE
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==1 && irrs==0 && irrms==0){
     //29
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==1 && irrs==0 && irrms==1){
     //30 NODE T
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==1 && irrs==1 && irrms==0){
     //31
-    sharpLeft();
+    turnLeft();
    }
    else if (irlms==1 && irls==1 && irms==1 && irrs==1 && irrms==1){
     //32 NODE T
@@ -205,16 +192,6 @@ void forward(){
     Serial.println("FORWARD");
 }
 
-void forwardLittle(){
-    digitalWrite(LM1, LOW);
-    digitalWrite(LM2, HIGH);
-    digitalWrite(RM1, LOW);
-    digitalWrite(RM2, HIGH);
-    analogWrite(LM2, 50);
-    analogWrite(RM2, 50);
-    Serial.println("FORWARD");
-}
-
 void backward(){
     digitalWrite(LM1, HIGH);
     digitalWrite(LM2, LOW);
@@ -223,27 +200,6 @@ void backward(){
     analogWrite(LM1, 90);
     analogWrite(RM2, 90);
     Serial.println("BACKWARD");
-}
-
-
-void sharpLeft(){
-    digitalWrite(LM1, HIGH); 
-    digitalWrite(LM2, LOW);
-    digitalWrite(RM1, LOW);
-    digitalWrite(RM2, HIGH);
-    analogWrite(LM1, 90);
-    analogWrite(RM2, 90);
-    Serial.println("Sharp Left");
-}
-
-void sharpRight(){
-    digitalWrite(LM1, LOW);
-    digitalWrite(LM2, HIGH);
-    digitalWrite(RM1, HIGH); 
-    digitalWrite(RM2, LOW);
-    analogWrite(LM2, 90);
-    analogWrite(RM1, 90);
-    Serial.println("Sharp Right");
 }
 
 void turnLeft(){
