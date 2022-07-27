@@ -367,6 +367,10 @@ void replay(){
   else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==1){
     turnRight();
   }
+  else if (irlms==1 && irls==1 && irms==0 && irrs==0 && irrms==0){
+      //25
+      turnLeft();
+     }
   else{
     if(path[readLength]=='D')
     {
