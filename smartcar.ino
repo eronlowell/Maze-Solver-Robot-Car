@@ -4,6 +4,8 @@
 #define MS 12   // Middle sensor
 #define RS 13 // Right sensor
 #define RMS 9 // Rightmost sensor
+#define RMMS 6 //RIGHTMOST MOST SENSOR
+#define LMMS  7 //LEFTMOST MOST SENSOR
 
 
 #define LM1 2   // left motor
@@ -22,6 +24,8 @@ int irls;
 int irms;
 int irrs;
 int irrms;
+int irrmms;
+int irlmms;
 
 char path[100]= {};
 int pathLength = 0;
@@ -34,7 +38,11 @@ int red;
 void setup()
 {
   pinMode(LS, INPUT);
+  pinMode(LMS, INPUT);
+  pinMode(LMMS, INPUT);
   pinMode(RS, INPUT);
+  pinMode(RMS, INPUT);
+  pinMode(RMMS, INPUT);
   pinMode(MS, INPUT);
 
 
