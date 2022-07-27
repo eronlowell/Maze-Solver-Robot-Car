@@ -4,20 +4,14 @@
 #define MS 12   // Middle sensor
 #define RS 13 // Right sensor
 #define RMS 9 // Rightmost sensor
-#define RMMS 6 //RIGHTMOST MOST SENSOR
-#define LMMS  7 //LEFTMOST MOST SENSOR
+#define RMMS 7
+#define LMMS 8
 
 
 #define LM1 2   // left motor
 #define LM2 3   
 #define RM1 4   // right motor
 #define RM2 5   
-
-#define S0 A0   // Color Sensor
-#define S1 A1   
-#define S2 A2   
-#define S3 A3   
-#define sensorOut 8
 
 int irlms;
 int irls;
@@ -32,8 +26,6 @@ int pathLength = 0;
 int readLength = 0;
 
 int replaystage;
-
-int red;
 
 void setup()
 {
@@ -51,24 +43,19 @@ void setup()
   pinMode(RM1, OUTPUT);
   pinMode(RM2, OUTPUT);
 
-  pinMode(S0, OUTPUT);  
-  pinMode(S1, OUTPUT);  
-  pinMode(S2, OUTPUT);  
-  pinMode(S3, OUTPUT); 
-  pinMode(sensorOut, INPUT);
-
-  digitalWrite(S0, HIGH);  
-  digitalWrite(S1, LOW); 
-
   Serial.begin(9600);
 }
 
 void loop()
 {
   readSensors();
-
-     if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==0){
+    if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==0){
       //01-UTurn
+      if (irlmms == 1 && irrmms == 1){
+        Serial.println("stoppp");
+        stopMotor();
+      }
+      else{
        if (path[pathLength-1] != 'B'){
         path[pathLength]= 'B';
         pathLength++;
@@ -78,6 +65,7 @@ void loop()
        else{
         turnRight();
        }
+      }
      }
      else if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==1){
       //02
@@ -152,7 +140,7 @@ void loop()
      }
      else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==0){
       //15
-      stopMotor();
+      forward();
      }
      else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==1){
       //16
@@ -246,13 +234,18 @@ void loop()
      }
 }
 
+
 void readSensors(){
   irlms = digitalRead(LMS);
   irls = digitalRead(LS);
   irms = digitalRead(MS);
   irrs = digitalRead(RS);
   irrms = digitalRead(RMS);
+  irrmms = digitalRead(RMMS);
+  irlmms = digitalRead(LMMS);
 }
+
+
 
 void forward(){
     digitalWrite(LM1, LOW);
@@ -301,10 +294,12 @@ void stopMotor(){
   digitalWrite(RM1,LOW);
   digitalWrite(RM2,LOW);
 
+  Serial.println("STOP");
+
   replaystage=1;
   path[pathLength]='D';
   pathLength++;
-  delay(5000);
+  delay(7000);
   replay();
 }
 
@@ -353,33 +348,34 @@ void shortPath(){
 }
 
 void replay(){
+  Serial.println("REPLAY");
    readSensors();
   if(irlms == 0 && irrms == 0 && irms==1 && irrs == 0 && irls == 0){
     forward();
+     Serial.println("REPLAY:1");
   }
   else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==0){
     turnRight();
+     Serial.println("REPLAY:2");
   }
   else if (irlms==0 && irls==0 && irms==1 && irrs==1 && irrms==0){
     turnRight();
+     Serial.println("REPLAY:3");
   }
   else if (irlms==0 && irls==1 && irms==0 && irrs==0 && irrms==0){
     turnLeft();
+     Serial.println("REPLAY:4");
   }
   else if (irlms==0 && irls==1 && irms==1 && irrs==0 && irrms==0){
     turnLeft();
+     Serial.println("REPLAY:4");
   }
   else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==0){
     forward();
+     Serial.println("REPLAY:5");
   }
-  else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==1){
-    turnRight();
-  }
-  else if (irlms==1 && irls==1 && irms==0 && irrs==0 && irrms==0){
-      //25
-      turnLeft();
-     }
   else{
+     Serial.println("REPLAY:ELSE");
     if(path[readLength]=='D')
     {
     forward();
@@ -392,10 +388,10 @@ void replay(){
     }
     if(path[readLength]=='R')
     {
-      turnRight();
+       turnRight();
     }
     if(path[readLength]=='L'){
-      turnLeft();
+        turnLeft();
     }
     if(path[readLength]=='S'){
     forward();
@@ -408,5 +404,6 @@ void replay(){
 void endMotion()
 
 {
+   Serial.println("ENDDDDD");
   endMotion();
 }
