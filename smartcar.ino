@@ -77,7 +77,7 @@ void loop()
      }
      else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==1){
       //04
-      if (path[pathLength-1] != 'R' || path[pathLength-1] != 'B'){
+      if (path[pathLength-1] != 'R'){
         path[pathLength]= 'R';
         pathLength++;
         Serial.println(path);
@@ -97,6 +97,9 @@ void loop()
         pathLength++;
         Serial.println(path);
         forward();
+        if (path[pathLength-2] == 'B'){
+          shortPath();
+        }
        }
        else{
         forward();
@@ -108,7 +111,18 @@ void loop()
      }
      else if (irlms==0 && irls==0 && irms==1 && irrs==1 && irrms==0){
       //07
-      turnRight();
+      if (path[pathLength-1] != 'R'){
+        path[pathLength]= 'R';
+        pathLength++;
+        Serial.println(path);
+        turnRight();
+        if (path[pathLength-2] == 'B'){
+          shortPath();
+        }
+       }
+       else{
+        turnRight();
+       }
      }
      else if (irlms==0 && irls==0 && irms==1 && irrs==1 && irrms==1){
       //08
@@ -132,7 +146,18 @@ void loop()
      }
      else if (irlms==0 && irls==1 && irms==1 && irrs==0 && irrms==0){
       //13
-      turnLeft();
+      if (path[pathLength-1] != 'L'){
+        path[pathLength]= 'L';
+        pathLength++;
+        Serial.println(path);
+        turnLeft();
+        if (path[pathLength-2] == 'B'){
+          shortPath();
+        }
+       }
+       else{
+        turnLeft();
+       }
      }
      else if (irlms==0 && irls==1 && irms==1 && irrs==0 && irrms==1){
       //14
@@ -341,9 +366,6 @@ void shortPath(){
     path[pathLength]='S';
     shortDone=1;
   }
-  
-  path[pathLength+1]='D';
-  path[pathLength+2]='D';
   pathLength++;
 }
 
@@ -353,6 +375,10 @@ void replay(){
   if(irlms == 0 && irrms == 0 && irms==1 && irrs == 0 && irls == 0){
     forward();
      Serial.println("REPLAY:1");
+  }
+  else if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==0){
+      //01-UTurn
+      turnRight();
   }
   else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==0){
     turnRight();
