@@ -58,11 +58,6 @@ void setup()
 void loop()
 {
   readSensors();
-//ColorSensor
-  digitalWrite(S2,LOW);
-  digitalWrite(S3,LOW); 
-  red = pulseIn(sensorOut, LOW);
-   if (red <= 41 || red >= 70){
 
      if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==0){
       //01-UTurn
@@ -149,7 +144,7 @@ void loop()
      }
      else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==0){
       //15
-      forward();
+      stopMotor();
      }
      else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==1){
       //16
@@ -241,10 +236,6 @@ void loop()
         turnLeft();
        }
      }
-   }
-   else{
-    stopMotor();
-   }
 }
 
 void readSensors(){
@@ -373,6 +364,9 @@ void replay(){
   else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==0){
     forward();
   }
+  else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==1){
+    turnRight();
+  }
   else{
     if(path[readLength]=='D')
     {
@@ -386,14 +380,10 @@ void replay(){
     }
     if(path[readLength]=='R')
     {
-      while (irlms != 0 && irrms != 0) {
-        turnRight();
-      }
+      turnRight();
     }
     if(path[readLength]=='L'){
-      while (irlms != 0 && irrms != 0){
-        turnLeft();
-      }
+      turnLeft();
     }
     if(path[readLength]=='S'){
     forward();
