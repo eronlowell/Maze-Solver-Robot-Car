@@ -52,12 +52,16 @@ void loop()
   readSensors();
     if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==0){
       //01-UTurn
-      if (irrmms == 1){
-        if(irlmms == 1){
-          stopMotor();
-        }
-        else{
-          if (pathRecorded == false){
+      if (irrmms == 1 && irlmms == 1){
+        stopMotor();
+      }
+      else{
+        turnRight();
+      }
+     }
+     else if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==1){
+      //02
+      if (pathRecorded == false){
             path[pathLength] = 'B';
             pathLength++;
             turnRight();
@@ -66,12 +70,6 @@ void loop()
           else{
           turnRight();
         }
-       }
-      }
-     }
-     else if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==1){
-      //02
-      turnRight();
      }
      else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==0){
       //03
@@ -346,34 +344,115 @@ void shortPath(){
 void replay(){
   Serial.println("REPLAY");
    readSensors();
-  if(irlms == 0 && irrms == 0 && irms==1 && irrs == 0 && irls == 0){
-    forward();
-     Serial.println("REPLAY:1");
-  }
-  else if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==0){
+  if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==0){
       //01-UTurn
       turnRight();
-  }
-  else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==0){
-    turnRight();
-     Serial.println("REPLAY:2");
-  }
-  else if (irlms==0 && irls==0 && irms==1 && irrs==1 && irrms==0){
-    turnRight();
-     Serial.println("REPLAY:3");
-  }
-  else if (irlms==0 && irls==1 && irms==0 && irrs==0 && irrms==0){
-    turnLeft();
-     Serial.println("REPLAY:4");
-  }
-  else if (irlms==0 && irls==1 && irms==1 && irrs==0 && irrms==0){
-    turnLeft();
-     Serial.println("REPLAY:4");
-  }
-  else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==0){
-    forward();
-     Serial.println("REPLAY:5");
-  }
+     }
+     else if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==1){
+      //02
+      turnRight();
+     }
+     else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==0){
+      //03
+      turnRight();
+     }
+     else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==1){
+      //04
+      turnRight();
+     }
+     else if (irlms==0 && irls==0 && irms==1 && irrs==0 && irrms==0){
+      //05
+        forward();
+     }
+     else if (irlms==0 && irls==0 && irms==1 && irrs==0 && irrms==1){
+      //06
+      turnRight();
+     }
+     else if (irlms==0 && irls==0 && irms==1 && irrs==1 && irrms==0){
+      //07
+      turnRight();
+     }
+     else if (irlms==0 && irls==1 && irms==0 && irrs==0 && irrms==0){
+      //09
+      turnLeft();
+     }
+     else if (irlms==0 && irls==1 && irms==0 && irrs==0 && irrms==1){
+      //10
+      turnRight();
+     }
+     else if (irlms==0 && irls==1 && irms==0 && irrs==1 && irrms==1){
+      //12
+      turnRight();
+     }
+     else if (irlms==0 && irls==1 && irms==1 && irrs==0 && irrms==0){
+      //13
+      turnLeft();
+     }
+     else if (irlms==0 && irls==1 && irms==1 && irrs==0 && irrms==1){
+      //14
+      turnLeft();
+     }
+     else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==0){
+      //15
+      forward();
+     }
+     else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==1){
+      //16
+      turnRight();
+     }
+     else if (irlms==1 && irls==0 && irms==0 && irrs==0 && irrms==0){
+      //17 
+      turnLeft();
+     }
+     else if (irlms==1 && irls==0 && irms==0 && irrs==1 && irrms==0){
+      //19 NODE
+      turnLeft();
+     }
+     else if (irlms==1 && irls==0 && irms==0 && irrs==1 && irrms==1){
+      //20 NODE
+      turnLeft();
+     }
+     else if (irlms==1 && irls==0 && irms==1 && irrs==0 && irrms==0){
+      //21 NODE
+      turnLeft();
+     }
+     else if (irlms==1 && irls==0 && irms==1 && irrs==0 && irrms==1){
+      //22 NODE
+      turnLeft();
+     }
+     else if (irlms==1 && irls==0 && irms==1 && irrs==1 && irrms==0){
+      //23
+      turnLeft();
+     }
+     else if (irlms==1 && irls==0 && irms==1 && irrs==1 && irrms==1){
+      //24 NODe
+      turnRight();
+     }
+     else if (irlms==1 && irls==1 && irms==0 && irrs==0 && irrms==0){
+      //25
+      turnLeft();
+     }
+     else if (irlms==1 && irls==1 && irms==0 && irrs==0 && irrms==1){
+      //26
+      turnLeft();
+     }
+     else if (irlms==1 && irls==1 && irms==0 && irrs==1 && irrms==0){
+      //27
+      turnLeft();
+     }
+     else if (irlms==1 && irls==1 && irms==0 && irrs==1 && irrms==1){
+      //28 NODE
+      turnLeft();
+     }
+     else if (irlms==1 && irls==1 && irms==1 && irrs==0 && irrms==1){
+      //30 NODE T
+      turnLeft();
+     }
+     else if (irlms==1 && irls==1 && irms==1 && irrs==1 && irrms==0){
+      //31
+      turnLeft();
+     }
+
   else{
      Serial.println("REPLAY:ELSE");
     if(path[readLength]=='D')
