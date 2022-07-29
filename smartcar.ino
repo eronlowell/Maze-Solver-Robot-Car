@@ -7,7 +7,6 @@
 #define RMMS 7
 #define LMMS 8
 
-
 #define LM1 2   // left motor
 #define LM2 3   
 #define RM1 4   // right motor
@@ -21,7 +20,9 @@ int irrms;
 int irrmms;
 int irlmms;
 
-char path[1000]= {};
+bool pathRecorded = false;
+
+char path[100]= {};
 int pathLength = 0;
 int readLength = 0;
 
@@ -51,22 +52,20 @@ void loop()
   readSensors();
     if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==0){
       //01-UTurn
-      if (irlmms == 1 && irrmms == 1){
-        Serial.println("stoppp");
-        stopMotor();
-      }
-      else{
-       if (path[pathLength-1] != 'B'){
-        path[pathLength]= 'B';
-        pathLength++;
-        Serial.println(path);
-        turnRight();
-        if (path[pathLength-2] == 'S'){
-          shortPath();
+      if (irrmms == 1){
+        if(irlmms == 1){
+          stopMotor();
         }
-       }
-       else{
-        turnRight();
+        else{
+          if (pathRecorded == false){
+            path[pathLength] = 'B';
+            pathLength++;
+            turnRight();
+            pathRecorded = true;
+          }
+          else{
+          turnRight();
+        }
        }
       }
      }
@@ -80,33 +79,19 @@ void loop()
      }
      else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==1){
       //04
-      if (path[pathLength-1] != 'R'){
+      if (pathRecorded == false){
         path[pathLength]= 'R';
         pathLength++;
-        Serial.println(path);
         turnRight();
-        if (path[pathLength-2] == 'B'){
-          shortPath();
+        pathRecorded = true;
         }
-       }
-       else{
-        turnRight();
-       }
+        else{
+          turnRight();
+        }
      }
      else if (irlms==0 && irls==0 && irms==1 && irrs==0 && irrms==0){
       //05
-        if (path[pathLength-1] != 'S'){
-        path[pathLength]= 'S';
-        pathLength++;
-        Serial.println(path);
         forward();
-        if (path[pathLength-2] == 'B'){
-          shortPath();
-        }
-       }
-       else{
-        forward();
-       }
      }
      else if (irlms==0 && irls==0 && irms==1 && irrs==0 && irrms==1){
       //06
@@ -114,18 +99,7 @@ void loop()
      }
      else if (irlms==0 && irls==0 && irms==1 && irrs==1 && irrms==0){
       //07
-      if (path[pathLength-1] != 'R'){
-        path[pathLength]= 'R';
-        pathLength++;
-        Serial.println(path);
-        turnRight();
-        if (path[pathLength-2] == 'B'){
-          shortPath();
-        }
-       }
-       else{
-        turnRight();
-       }
+      turnRight();
      }
      else if (irlms==0 && irls==0 && irms==1 && irrs==1 && irrms==1){
       //08
@@ -145,22 +119,19 @@ void loop()
      }
      else if (irlms==0 && irls==1 && irms==0 && irrs==1 && irrms==1){
       //12
-      turnLeft();
+      if (pathRecorded == false){
+        path[pathLength]= 'S';
+        pathLength++;
+        turnLeft();
+        pathRecorded = true;
+        }
+        else{
+          turnLeft();
+        }
      }
      else if (irlms==0 && irls==1 && irms==1 && irrs==0 && irrms==0){
       //13
-      if (path[pathLength-1] != 'L'){
-        path[pathLength]= 'L';
-        pathLength++;
-        Serial.println(path);
-        turnLeft();
-        if (path[pathLength-2] == 'B'){
-          shortPath();
-        }
-       }
-       else{
-        turnLeft();
-       }
+      turnLeft();
      }
      else if (irlms==0 && irls==1 && irms==1 && irrs==0 && irrms==1){
       //14
@@ -224,18 +195,15 @@ void loop()
      }
      else if (irlms==1 && irls==1 && irms==1 && irrs==0 && irrms==0){
       //29
-        if (path[pathLength-1] != 'L'){
+        if (pathRecorded == false){
         path[pathLength]= 'L';
         pathLength++;
-        Serial.println(path);
         turnLeft();
-        if (path[pathLength-2] == 'B'){
-          shortPath();
+        pathRecorded = true;
         }
-       }
-       else{
-        turnLeft();
-       }
+        else{
+          turnLeft();
+        }
      }
      else if (irlms==1 && irls==1 && irms==1 && irrs==0 && irrms==1){
       //30 NODE T
@@ -247,19 +215,20 @@ void loop()
      }
      else if (irlms==1 && irls==1 && irms==1 && irrs==1 && irrms==1){
       //32 NODE T
-        if (path[pathLength-1] != 'L'){
+        if (pathRecorded == false){
         path[pathLength]= 'L';
         pathLength++;
-        Serial.println(path);
         turnLeft();
-        if (path[pathLength-2] == 'B'){
-          shortPath();
+        pathRecorded = true;
         }
-       }
-       else{
-        turnLeft();
-       }
+        else{
+          turnLeft();
+        }
      }
+
+     shortPath();
+     pathRecorded = false;
+     
 }
 
 
@@ -333,49 +302,45 @@ void stopMotor(){
 
 void shortPath(){
 
- int shortDone=0;
 
-  if(path[pathLength-3]=='L' && path[pathLength-1]=='R'){
+  if(path[pathLength-3]=='L' && path[pathLength-2]=='B' && path[pathLength-1]=='R'){
     pathLength-=3;
     path[pathLength]='B';
-    shortDone=1;
+    pathLength++;
   }
 
-  if(path[pathLength-3]=='L' && path[pathLength-1]=='S' && shortDone==0){
+  else if(path[pathLength-3]=='L' && path[pathLength-2]=='B' && path[pathLength-1]=='S'){
     pathLength-=3;
     path[pathLength]='R';
-    shortDone=1;
+    pathLength++;
   }
 
-  if(path[pathLength-3]=='B' && path[pathLength-1]=='B' && shortDone==0){
-    pathLength-=3;
-    path[pathLength]='S';
-    shortDone=1;
-  }
-
-  if(path[pathLength-3]=='R' && path[pathLength-1]=='L' && shortDone==0){
+  else if(path[pathLength-3]=='R' && path[pathLength-2]=='B' && path[pathLength-1]=='L'){
     pathLength-=3;
     path[pathLength]='B';
-    shortDone=1;
+    pathLength++;
   }
 
-  if(path[pathLength-3]=='S' && path[pathLength-1]=='L' && shortDone==0){
+  else if(path[pathLength-3]=='S' && path[pathLength-2]=='B' && path[pathLength-1]=='L'){
     pathLength-=3;
     path[pathLength]='R';
-    shortDone=1;
+    pathLength++;
   }
 
-  if(path[pathLength-3]=='S' && path[pathLength-1]=='S' && shortDone==0){
+  else if(path[pathLength-3]=='S' && path[pathLength-2]=='B' && path[pathLength-1]=='S'){
     pathLength-=3;
     path[pathLength]='B';
-    shortDone=1;
+    pathLength++;
   }
-    if(path[pathLength-3]=='L' && path[pathLength-1]=='L' && shortDone==0){
+  else if(path[pathLength-3]=='L' && path[pathLength-2]=='B' && path[pathLength-1]=='L'){
     pathLength-=3;
     path[pathLength]='S';
-    shortDone=1;
+    pathLength++;
   }
-  pathLength++;
+  else{
+    Serial.println(path);
+  }
+
 }
 
 void replay(){
@@ -413,22 +378,20 @@ void replay(){
      Serial.println("REPLAY:ELSE");
     if(path[readLength]=='D')
     {
-    forward();
-    delay(100);
     digitalWrite(LM1, LOW);
     digitalWrite(LM2, LOW);
     digitalWrite(RM1, LOW);
     digitalWrite(RM2, LOW);
       endMotion();
     }
-    if(path[readLength]=='R')
+    else if(path[readLength]=='R')
     {
        turnRight();
     }
-    if(path[readLength]=='L'){
+    else if(path[readLength]=='L'){
         turnLeft();
     }
-    if(path[readLength]=='S'){
+    else if(path[readLength]=='S'){
     forward();
     }
     readLength++;
