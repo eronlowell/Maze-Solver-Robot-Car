@@ -410,14 +410,10 @@ void replay(){
      }
      else if (irlms==1 && irls==0 && irms==0 && irrs==1 && irrms==1){
       //20 NODE
-      turnLeft();
+      turnRight();
      }
      else if (irlms==1 && irls==0 && irms==1 && irrs==0 && irrms==0){
       //21 NODE
-      turnLeft();
-     }
-     else if (irlms==1 && irls==0 && irms==1 && irrs==0 && irrms==1){
-      //22 NODE
       turnLeft();
      }
      else if (irlms==1 && irls==0 && irms==1 && irrs==1 && irrms==0){
@@ -438,10 +434,6 @@ void replay(){
      }
      else if (irlms==1 && irls==1 && irms==0 && irrs==1 && irrms==0){
       //27
-      turnLeft();
-     }
-     else if (irlms==1 && irls==1 && irms==0 && irrs==1 && irrms==1){
-      //28 NODE
       turnLeft();
      }
      else if (irlms==1 && irls==1 && irms==1 && irrs==0 && irrms==1){
