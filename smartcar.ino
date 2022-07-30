@@ -21,6 +21,7 @@ int irrmms;
 int irlmms;
 
 bool pathRecorded = false;
+bool pathTaken = false;
 
 char path[100]= {};
 int pathLength = 0;
@@ -90,6 +91,7 @@ void loop()
      else if (irlms==0 && irls==0 && irms==1 && irrs==0 && irrms==0){
       //05
         forward();
+        pathRecorded = false;
      }
      else if (irlms==0 && irls==0 && irms==1 && irrs==0 && irrms==1){
       //06
@@ -225,7 +227,7 @@ void loop()
      }
 
      shortPath();
-     pathRecorded = false;
+     
      
 }
 
@@ -342,132 +344,64 @@ void shortPath(){
 }
 
 void replay(){
-  Serial.println("REPLAY");
+  
    readSensors();
-  if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==0){
-      //01-UTurn
-      turnRight();
-     }
-     else if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==1){
-      //02
-      turnRight();
-     }
-     else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==0){
-      //03
-      turnRight();
-     }
-     else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==1){
-      //04
-      turnRight();
-     }
-     else if (irlms==0 && irls==0 && irms==1 && irrs==0 && irrms==0){
-      //05
-        forward();
-     }
-     else if (irlms==0 && irls==0 && irms==1 && irrs==0 && irrms==1){
-      //06
-      turnRight();
-     }
-     else if (irlms==0 && irls==0 && irms==1 && irrs==1 && irrms==0){
-      //07
-      turnRight();
-     }
-     else if (irlms==0 && irls==1 && irms==0 && irrs==0 && irrms==0){
-      //09
-      turnLeft();
-     }
-     else if (irlms==0 && irls==1 && irms==0 && irrs==0 && irrms==1){
-      //10
-      turnRight();
-     }
-     else if (irlms==0 && irls==1 && irms==0 && irrs==1 && irrms==1){
-      //12
-      turnRight();
-     }
-     else if (irlms==0 && irls==1 && irms==1 && irrs==0 && irrms==0){
-      //13
-      turnLeft();
-     }
-     else if (irlms==0 && irls==1 && irms==1 && irrs==0 && irrms==1){
-      //14
-      turnLeft();
-     }
-     else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==0){
-      //15
+  if ((irrms == 1) || (irlms == 1)){
+    if (pathTaken == false){
+      if(path[readLength]=='D')
+      {
+      digitalWrite(LM1, LOW);
+      digitalWrite(LM2, LOW);
+      digitalWrite(RM1, LOW);
+      digitalWrite(RM2, LOW);
+        endMotion();
+      }
+      else if(path[readLength]=='R')
+      {
+         turnRight();
+      }
+      else if(path[readLength]=='L'){
+          turnLeft();
+      }
+      else if(path[readLength]=='S'){
       forward();
-     }
-     else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==1){
-      //16
-      turnRight();
-     }
-     else if (irlms==1 && irls==0 && irms==0 && irrs==0 && irrms==0){
-      //17 
-      turnLeft();
-     }
-     else if (irlms==1 && irls==0 && irms==0 && irrs==1 && irrms==0){
-      //19 NODE
-      turnLeft();
-     }
-     else if (irlms==1 && irls==0 && irms==0 && irrs==1 && irrms==1){
-      //20 NODE
-      turnRight();
-     }
-     else if (irlms==1 && irls==0 && irms==1 && irrs==0 && irrms==0){
-      //21 NODE
-      turnLeft();
-     }
-     else if (irlms==1 && irls==0 && irms==1 && irrs==1 && irrms==0){
-      //23
-      turnLeft();
-     }
-     else if (irlms==1 && irls==0 && irms==1 && irrs==1 && irrms==1){
-      //24 NODe
-      turnRight();
-     }
-     else if (irlms==1 && irls==1 && irms==0 && irrs==0 && irrms==0){
-      //25
-      turnLeft();
-     }
-     else if (irlms==1 && irls==1 && irms==0 && irrs==0 && irrms==1){
-      //26
-      turnLeft();
-     }
-     else if (irlms==1 && irls==1 && irms==0 && irrs==1 && irrms==0){
-      //27
-      turnLeft();
-     }
-     else if (irlms==1 && irls==1 && irms==1 && irrs==0 && irrms==1){
-      //30 NODE T
-      turnLeft();
-     }
-     else if (irlms==1 && irls==1 && irms==1 && irrs==1 && irrms==0){
-      //31
-      turnLeft();
-     }
-
-  else{
-     Serial.println("REPLAY:ELSE");
-    if(path[readLength]=='D')
-    {
-    digitalWrite(LM1, LOW);
-    digitalWrite(LM2, LOW);
-    digitalWrite(RM1, LOW);
-    digitalWrite(RM2, LOW);
-      endMotion();
+      }
+      readLength++;
+      pathTaken = true;
     }
-    else if(path[readLength]=='R')
-    {
-       turnRight();
-    }
-    else if(path[readLength]=='L'){
+    else{
+      if (irrs == 1){
+        turnRight();
+      }
+      if (irls == 1){
         turnLeft();
+      }
     }
-    else if(path[readLength]=='S'){
-    forward();
-    }
-    readLength++;
   }
-  replay();
+  else{
+    if (irls == 0 && irms == 0 && irrs == 0){
+      turnRight();
+    }
+    else if (irls == 0 && irms == 0 && irrs == 1){
+      turnRight();
+    }
+    else if (irls == 0 && irms == 1 && irrs == 0){
+      turnRight();
+    }
+    else if (irls == 0 && irms == 1 && irrs == 1){
+      turnRight();
+    }
+    else if (irls == 1 && irms == 0 && irrs == 0){
+      turnLeft();
+    }
+    else if (irls == 1 && irms == 1 && irrs == 0){
+      turnLeft();
+    }
+    else if (irls == 1 && irms == 1 && irrs == 1){
+      turnLeft();
+    }
+    pathTaken = false;
+  }
 }
 
 void endMotion()
