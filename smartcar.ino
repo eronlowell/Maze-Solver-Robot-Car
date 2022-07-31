@@ -358,13 +358,13 @@ void replay(){
       }
       else if(path[readLength]=='R')
       {
-         turnRight();
+        turnRight();
       }
       else if(path[readLength]=='L'){
-          turnLeft();
+        turnLeft();
       }
       else if(path[readLength]=='S'){
-      forward();
+        forward();
       }
       readLength++;
       pathTaken = true;
@@ -386,7 +386,8 @@ void replay(){
       turnRight();
     }
     else if (irls == 0 && irms == 1 && irrs == 0){
-      turnRight();
+      forward();
+      pathTaken = false;
     }
     else if (irls == 0 && irms == 1 && irrs == 1){
       turnRight();
@@ -400,7 +401,7 @@ void replay(){
     else if (irls == 1 && irms == 1 && irrs == 1){
       turnLeft();
     }
-    pathTaken = false;
+    
   }
 }
 
