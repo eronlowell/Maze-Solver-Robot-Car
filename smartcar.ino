@@ -103,6 +103,7 @@ void loop()
      }
      else if (irlms==0 && irls==0 && irms==1 && irrs==1 && irrms==1){
       //08
+      delay(250);
       turnRight();
      }
      else if (irlms==0 && irls==1 && irms==0 && irrs==0 && irrms==0){
@@ -195,6 +196,7 @@ void loop()
      }
      else if (irlms==1 && irls==1 && irms==1 && irrs==0 && irrms==0){
       //29
+      delay(250);
         if (pathRecorded == false){
         path[pathLength]= 'L';
         pathLength++;
@@ -215,6 +217,7 @@ void loop()
      }
      else if (irlms==1 && irls==1 && irms==1 && irrs==1 && irrms==1){
       //32 NODE T
+      delay(250);
         if (pathRecorded == false){
         path[pathLength]= 'L';
         pathLength++;
