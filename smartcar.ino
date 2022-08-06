@@ -62,7 +62,7 @@ void loop()
      }
      else if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==1){
       //02
-      if (pathRecorded == false){
+      if (pathRecorded == false && irrmms == 1){
             path[pathLength] = 'B';
             pathLength++;
             turnRight();
