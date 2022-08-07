@@ -53,6 +53,17 @@ void loop()
   readSensors();
     if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==0){
       //01-UTurn
+
+      if (pathRecorded == false && irrmms == 1){
+            path[pathLength] = 'B';
+            pathLength++;
+            turnRight();
+            pathRecorded = true;
+          }
+          else{
+          turnRight();
+        }
+        
       if (irrmms == 1 && irlmms == 1){
         stopMotor();
       }
@@ -62,8 +73,8 @@ void loop()
      }
      else if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==1){
       //02
-      if (pathRecorded == false && irrmms == 1){
-            path[pathLength] = 'B';
+      if (pathRecorded == false){
+            path[pathLength] = 'R';
             pathLength++;
             turnRight();
             pathRecorded = true;
@@ -103,7 +114,6 @@ void loop()
      }
      else if (irlms==0 && irls==0 && irms==1 && irrs==1 && irrms==1){
       //08
-      delay(250);
       turnRight();
      }
      else if (irlms==0 && irls==1 && irms==0 && irrs==0 && irrms==0){
@@ -196,7 +206,6 @@ void loop()
      }
      else if (irlms==1 && irls==1 && irms==1 && irrs==0 && irrms==0){
       //29
-      delay(250);
         if (pathRecorded == false){
         path[pathLength]= 'L';
         pathLength++;
@@ -217,7 +226,6 @@ void loop()
      }
      else if (irlms==1 && irls==1 && irms==1 && irrs==1 && irrms==1){
       //32 NODE T
-      delay(250);
         if (pathRecorded == false){
         path[pathLength]= 'L';
         pathLength++;
@@ -343,13 +351,15 @@ void shortPath(){
   else{
     Serial.println(path);
   }
-
+  path{pathLength+1] = "";
+  path{pathLength] = "";
 }
 
 void replay(){
   
    readSensors();
   if ((irrms == 1) || (irlms == 1)){
+    delay(1000);
     if (pathTaken == false){
       if(path[readLength]=='D')
       {
