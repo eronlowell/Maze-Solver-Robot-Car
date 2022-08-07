@@ -54,7 +54,7 @@ void loop()
     if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==0){
       //01-UTurn
 
-      if (pathRecorded == false && irrmms == 1){
+      if (pathRecorded == false && irrmms == 1 && irlmms == 0){
             path[pathLength] = 'B';
             pathLength++;
             turnRight();
@@ -351,8 +351,8 @@ void shortPath(){
   else{
     Serial.println(path);
   }
-  path{pathLength+1] = "";
-  path{pathLength] = "";
+  path[pathLength+1] = ' ';
+  path[pathLength] = ' ';
 }
 
 void replay(){
