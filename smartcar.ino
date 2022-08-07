@@ -73,6 +73,14 @@ void loop()
      }
      else if (irlms==0 && irls==0 && irms==0 && irrs==0 && irrms==1){
       //02
+      turnRight();
+     }
+     else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==0){
+      //03
+      turnRight();
+     }
+     else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==1){
+      //04
       if (pathRecorded == false){
             path[pathLength] = 'R';
             pathLength++;
@@ -83,14 +91,6 @@ void loop()
           turnRight();
         }
      }
-     else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==0){
-      //03
-      turnRight();
-     }
-     else if (irlms==0 && irls==0 && irms==0 && irrs==1 && irrms==1){
-      //04
-      turnRight();
-     }
      else if (irlms==0 && irls==0 && irms==1 && irrs==0 && irrms==0){
       //05
         forward();
@@ -98,7 +98,15 @@ void loop()
      }
      else if (irlms==0 && irls==0 && irms==1 && irrs==0 && irrms==1){
       //06
-      turnRight();
+      if (pathRecorded == false){
+          path[pathLength]= 'S';
+          pathLength++;
+          turnLeft();
+          pathRecorded = true;
+          }
+          else{
+            turnRight();
+          }
      }
      else if (irlms==0 && irls==0 && irms==1 && irrs==1 && irrms==0){
       //07
@@ -138,15 +146,7 @@ void loop()
      }
      else if (irlms==0 && irls==1 && irms==1 && irrs==1 && irrms==1){
       //16
-      if (pathRecorded == false){
-        path[pathLength]= 'S';
-        pathLength++;
         turnLeft();
-        pathRecorded = true;
-        }
-        else{
-          turnLeft();
-        }
      }
      else if (irlms==1 && irls==0 && irms==0 && irrs==0 && irrms==0){
       //17 
